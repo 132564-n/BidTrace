@@ -1,0 +1,95 @@
+{
+  "model": "deepseek-flash",
+  "checked_at": "2026-11-05T11:31:46.889007+00:00",
+  "extracted_check_count": 4,
+  "extracted_checks": [
+    {
+      "id": "C1",
+      "name": "投标报价不超过项目预算",
+      "category": "numeric",
+      "source_page": 3,
+      "source_quotes": [
+        "3.项目预算金额：145万元。"
+      ],
+      "check_boundary": "投标报价不得高于项目预算金额145万元，否则投标无效。",
+      "field_key": "quote_total",
+      "operator": "<=",
+      "threshold": 145,
+      "unit": "万元"
+    },
+    {
+      "id": "C6",
+      "name": "授权委托书",
+      "category": "document_presence",
+      "source_page": 26,
+      "source_quotes": [
+        "按招标文件要求提供授权委托书；"
+      ],
+      "check_boundary": "投标文件须按招标文件要求提供授权委托书。",
+      "target": "授权委托书"
+    },
+    {
+      "id": "C7",
+      "name": "采购需求偏离表",
+      "category": "document_presence",
+      "source_page": 63,
+      "source_quotes": [
+        "采购需求偏离表 项目编号： 项目名称："
+      ],
+      "check_boundary": "投标文件须提供采购需求偏离表，且内容不得为空。",
+      "target": "采购需求偏离表"
+    },
+    {
+      "id": "C10",
+      "name": "法定代表人身份证明",
+      "category": "document_presence",
+      "source_page": 59,
+      "source_quotes": [
+        "法定代表人（单位负责人）身份证明"
+      ],
+      "check_boundary": "若投标文件中签字之处均为法定代表人本人签署，则须提供法定代表人身份证明。",
+      "target": "法定代表人身份证明"
+    }
+  ],
+  "semantic_judgments": [
+    {
+      "case": "compliant",
+      "rule_id": "R09",
+      "expected": "满足",
+      "actual": "满足",
+      "bid_page": 5,
+      "bid_quote": "每日（包含节假日）监测并收集不同渠道的城市运行数据，发现异常及时处理；每日（包含节假日）汇总并编制《综合信息》。",
+      "reason": "投标文件第5页明确承诺每日（包含节假日）监测并收集数据，且每日（包含节假日）汇总并编制《综合信息》，与招标要求一致。"
+    },
+    {
+      "case": "compliant",
+      "rule_id": "R10",
+      "expected": "满足",
+      "actual": "满足",
+      "bid_page": 4,
+      "bid_quote": "利用网格问题密度识别高频区域，生成定向抽查清单，开展问题质量抽查；对不符合标准的问题单作标记，并形成日报。",
+      "reason": "投标文件第4页明确包含定向抽查清单、问题质量抽查、对不符合标准问题单作标记并形成日报，覆盖招标要求。"
+    },
+    {
+      "case": "flawed",
+      "rule_id": "R09",
+      "expected": "明确冲突",
+      "actual": "明确冲突",
+      "bid_page": 5,
+      "bid_quote": "监测安排为每周一至周五收集数据，并在工作日编制《综合信息》。",
+      "reason": "招标要求每日（包含节假日）监测并编制综合信息，投标文件第5页明确承诺仅每周一至周五收集数据、在工作日编制《综合信息》，直接排除了节假日，构成直接相反承诺。"
+    },
+    {
+      "case": "flawed",
+      "rule_id": "R10",
+      "expected": "需人工复核",
+      "actual": "需人工复核",
+      "bid_page": 4,
+      "bid_quote": "拟建立问题质量分析机制，开展抽查并形成相关日常记录。",
+      "reason": "投标文件第4页提到“开展抽查并形成相关日常记录”，覆盖了抽查和质量记录，但未逐字体现“对不符合标准的问题单进行标记”这一要求，也仅表述为“拟建立”机制，缺乏已落实的明确承诺，需人工复核。"
+    }
+  ],
+  "semantic_correct": 4,
+  "semantic_total": 4,
+  "scope_note": "仅为公开招标文件和两份模拟投标文件上的开发验证"
+}

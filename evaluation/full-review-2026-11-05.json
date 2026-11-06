@@ -1,0 +1,138 @@
+[
+  {
+    "correct": 10,
+    "total": 10,
+    "rows": [
+      {
+        "rule_id": "R01",
+        "expected": "满足",
+        "actual": "满足",
+        "correct": true
+      },
+      {
+        "rule_id": "R02",
+        "expected": "满足",
+        "actual": "满足",
+        "correct": true
+      },
+      {
+        "rule_id": "R03",
+        "expected": "满足",
+        "actual": "满足",
+        "correct": true
+      },
+      {
+        "rule_id": "R04",
+        "expected": "满足",
+        "actual": "满足",
+        "correct": true
+      },
+      {
+        "rule_id": "R05",
+        "expected": "满足",
+        "actual": "满足",
+        "correct": true
+      },
+      {
+        "rule_id": "R06",
+        "expected": "满足",
+        "actual": "满足",
+        "correct": true
+      },
+      {
+        "rule_id": "R07",
+        "expected": "满足",
+        "actual": "满足",
+        "correct": true
+      },
+      {
+        "rule_id": "R08",
+        "expected": "满足",
+        "actual": "满足",
+        "correct": true
+      },
+      {
+        "rule_id": "R09",
+        "expected": "满足",
+        "actual": "满足",
+        "correct": true
+      },
+      {
+        "rule_id": "R10",
+        "expected": "满足",
+        "actual": "满足",
+        "correct": true
+      }
+    ],
+    "case": "compliant",
+    "review_id": "33ef7d5c3876466d81887eef8cf701e9"
+  },
+  {
+    "correct": 10,
+    "total": 10,
+    "rows": [
+      {
+        "rule_id": "R01",
+        "expected": "满足",
+        "actual": "满足",
+        "correct": true
+      },
+      {
+        "rule_id": "R02",
+        "expected": "未找到证据",
+        "actual": "未找到证据",
+        "correct": true
+      },
+      {
+        "rule_id": "R03",
+        "expected": "满足",
+        "actual": "满足",
+        "correct": true
+      },
+      {
+        "rule_id": "R04",
+        "expected": "明确冲突",
+        "actual": "明确冲突",
+        "correct": true
+      },
+      {
+        "rule_id": "R05",
+        "expected": "明确冲突",
+        "actual": "明确冲突",
+        "correct": true
+      },
+      {
+        "rule_id": "R06",
+        "expected": "明确冲突",
+        "actual": "明确冲突",
+        "correct": true
+      },
+      {
+        "rule_id": "R07",
+        "expected": "明确冲突",
+        "actual": "明确冲突",
+        "correct": true
+      },
+      {
+        "rule_id": "R08",
+        "expected": "明确冲突",
+        "actual": "明确冲突",
+        "correct": true
+      },
+      {
+        "rule_id": "R09",
+        "expected": "明确冲突",
+        "actual": "明确冲突",
+        "correct": true
+      },
+      {
+        "rule_id": "R10",
+        "expected": "需人工复核",
+        "actual": "需人工复核",
+        "correct": true
+      }
+    ],
+    "case": "flawed",
+    "review_id": "3bbe2b8e83dd484eb9f671123012df28"
+  }
+]

@@ -1,0 +1,150 @@
+{
+  "dataset_id": "city-ops-2025-demo-v1",
+  "purpose": "演示与回归测试；模拟投标文件不用于真实投标",
+  "source": {
+    "pdf": "source/2025-信息化城市管理运行-招标文件.pdf",
+    "url": "https://csglw.beijing.gov.cn/zwxx/zbzb/zbxxx/202506/P020250626595469092921.pdf",
+    "pdf_pages": 70,
+    "page_numbering": "本数据集统一使用 PDF 物理页码，从 1 开始；文件内印刷页码可能不同"
+  },
+  "statuses": ["满足", "明确冲突", "未找到证据", "需人工复核"],
+  "rules": [
+    {
+      "id": "R01",
+      "category": "document_presence",
+      "name": "投标书章节可找到",
+      "target": "投标书",
+      "source_page": 57,
+      "source_quotes": ["1 投标书（实质性格式）"],
+      "check_boundary": "只检查文字章节是否存在，不判断签名、盖章及格式有效性"
+    },
+    {
+      "id": "R02",
+      "category": "document_presence",
+      "name": "培训方案可找到",
+      "target": "培训方案",
+      "source_page": 33,
+      "source_quotes": ["4、培训：据投标人提供的培训方案", "未提供相关方案，得0分。"],
+      "check_boundary": "该项属于评分材料；未找到时提示可能失分，不判定投标无效"
+    },
+    {
+      "id": "R03",
+      "category": "document_presence",
+      "name": "项目保障方案可找到",
+      "target": "项目保障方案",
+      "source_page": 33,
+      "source_quotes": ["制《项目保障方案》，合计10分。"],
+      "check_boundary": "该项属于评分材料；只检查章节存在，不评价方案质量"
+    },
+    {
+      "id": "R04",
+      "category": "numeric",
+      "name": "投标总报价不超过145万元",
+      "field_key": "quote_total",
+      "source_page": 3,
+      "source_quotes": ["3.项目预算金额：145万元。"],
+      "operator": "<=",
+      "threshold": 145,
+      "unit": "万元",
+      "check_boundary": "程序只对经原文定位和单位归一的总报价做数值比较"
+    },
+    {
+      "id": "R05",
+      "category": "numeric",
+      "name": "投标有效期不少于90日历天",
+      "field_key": "validity_days",
+      "source_page": 8,
+      "source_quotes": ["自提交投标文件的截止之日起算 90 日历天。"],
+      "operator": ">=",
+      "threshold": 90,
+      "unit": "日历天",
+      "check_boundary": "程序只对投标书中明确承诺的有效期做数值比较"
+    },
+    {
+      "id": "R06",
+      "category": "numeric",
+      "name": "实施期限为一年",
+      "field_key": "duration_months",
+      "source_page": 35,
+      "source_quotes": ["实施期限：自合同签订之日起一年。"],
+      "operator": "=",
+      "threshold": 12,
+      "unit": "月",
+      "check_boundary": "程序在一年与12个月归一后比较；其他工期表述交人工复核"
+    },
+    {
+      "id": "R07",
+      "category": "numeric",
+      "name": "可提供7×24小时现场值守",
+      "field_key": "service_hours",
+      "source_page": 37,
+      "source_quotes": ["可提供7*24小时", "现场值守"],
+      "operator": "coverage",
+      "threshold": "7天×24小时",
+      "unit": "每周",
+      "check_boundary": "程序只比较明确的值守天数和每日小时数，不据模糊承诺推断覆盖能力"
+    },
+    {
+      "id": "R08",
+      "category": "numeric",
+      "name": "设置项目负责人1名",
+      "field_key": "manager_count",
+      "source_page": 37,
+      "source_quotes": ["要求设置项目负责人 1 名"],
+      "operator": ">=",
+      "threshold": 1,
+      "unit": "名",
+      "check_boundary": "程序只比较明确人数或否定表述，不核验个人经历及身份"
+    },
+    {
+      "id": "R09",
+      "category": "semantic",
+      "name": "每日含节假日监测并编制综合信息",
+      "source_page": 37,
+      "source_quotes": ["每日(包含节假日)监测并收集", "每日(包含节假日)按要求编制完成《综合信"],
+      "check_boundary": "检索到原文后由模型判断覆盖范围；只在明确排除节假日时给明确冲突"
+    },
+    {
+      "id": "R10",
+      "category": "semantic",
+      "name": "质量抽查、问题标记并形成日报",
+      "source_page": 36,
+      "source_quotes": ["定向抽查清单", "对不符合标准的问题单进行标记，并形成日"],
+      "check_boundary": "泛称质量分析或日常记录不足以确认满足；有部分响应时交人工复核"
+    }
+  ],
+  "cases": [
+    {
+      "id": "compliant",
+      "pdf": "bids/模拟投标文件-符合样本.pdf",
+      "expected": [
+        {"rule_id": "R01", "status": "满足", "bid_page": 2, "bid_quote": "投标书"},
+        {"rule_id": "R02", "status": "满足", "bid_page": 6, "bid_quote": "培训方案"},
+        {"rule_id": "R03", "status": "满足", "bid_page": 6, "bid_quote": "项目保障方案"},
+        {"rule_id": "R04", "status": "满足", "bid_page": 2, "bid_quote": "投标总报价为140万元。"},
+        {"rule_id": "R05", "status": "满足", "bid_page": 2, "bid_quote": "本投标有效期为自提交投标文件截止之日起90日历天。"},
+        {"rule_id": "R06", "status": "满足", "bid_page": 2, "bid_quote": "项目实施期限为自合同签订之日起12个月。"},
+        {"rule_id": "R07", "status": "满足", "bid_page": 3, "bid_quote": "团队可提供每周7天、每天24小时现场值守。"},
+        {"rule_id": "R08", "status": "满足", "bid_page": 3, "bid_quote": "本项目设置项目负责人1名"},
+        {"rule_id": "R09", "status": "满足", "bid_page": 5, "bid_quote": "每日（包含节假日）监测并收集不同渠道的城市运行数据"},
+        {"rule_id": "R10", "status": "满足", "bid_page": 4, "bid_quote": "生成定向抽查清单，开展问题质量抽查"}
+      ]
+    },
+    {
+      "id": "flawed",
+      "pdf": "bids/模拟投标文件-问题样本.pdf",
+      "expected": [
+        {"rule_id": "R01", "status": "满足", "bid_page": 2, "bid_quote": "投标书"},
+        {"rule_id": "R02", "status": "未找到证据", "bid_page": null, "bid_quote": null},
+        {"rule_id": "R03", "status": "满足", "bid_page": 6, "bid_quote": "项目保障方案"},
+        {"rule_id": "R04", "status": "明确冲突", "bid_page": 2, "bid_quote": "投标总报价为150万元。"},
+        {"rule_id": "R05", "status": "明确冲突", "bid_page": 2, "bid_quote": "本投标有效期为自提交投标文件截止之日起60日历天。"},
+        {"rule_id": "R06", "status": "明确冲突", "bid_page": 2, "bid_quote": "项目实施期限为自合同签订之日起18个月。"},
+        {"rule_id": "R07", "status": "明确冲突", "bid_page": 3, "bid_quote": "现场值守时间为每周5天、每日8小时。"},
+        {"rule_id": "R08", "status": "明确冲突", "bid_page": 3, "bid_quote": "本项目不设专职项目负责人。"},
+        {"rule_id": "R09", "status": "明确冲突", "bid_page": 5, "bid_quote": "监测安排为每周一至周五收集数据，并在工作日编制《综合信息》。"},
+        {"rule_id": "R10", "status": "需人工复核", "bid_page": 4, "bid_quote": "拟建立问题质量分析机制，开展抽查并形成相关日常记录。"}
+      ]
+    }
+  ]
+}
